@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function index(){
+    public function register(){
         return view('admin.register');
     }
     public function actionRegister(Request $request)

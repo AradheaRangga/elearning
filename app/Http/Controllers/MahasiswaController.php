@@ -32,7 +32,7 @@ class MahasiswaController extends Controller
             'user_id' => $request->user_id
          ]);
 
-         return redirect()->route('mahasiswa_index');
+         return view('admin.mahasiswa.index');
     }
 
     public function show(Mahasiswa $mahasiswa)
@@ -42,29 +42,23 @@ class MahasiswaController extends Controller
 
     public function edit(Mahasiswa $mahasiswa)
     {
-        return view('admin.mahasiswa.edit', compact('mahasiswa'));
+        $user = User::where('id', $mahasiswa->user_id)->get();
+
+        return view('admin.mahasiswa.edit', compact('user', 'mahasiswa'));
     }
 
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        $validation = Validator::make($request->all(), [
-            'user_id' => 'required',
-            'nim' => 'required|min:10',
-            'name' => 'required',
-        ]);
-
-        if ($validation->fails()) {
-            return response()->json($validation->errors(), 422);
-        }
 
         $mahasiswa->update([
-            'user_id' => $request->user_id,
             'nim' => $request->nim,
-            'name' => $request->nama,
+            'tanggal_lahir' => $request->tanggal_lahir,
             'asal' => $request->asal,
             'gender' => $request->gender,
-            'tanggal_lahir' => $request->tanggal_lahir
-        ]);
+            'user_id' => $request->user_id
+         ]);
+
+         return view('admin.mahasiswa.index');
     }
 
     public function delete(Mahasiswa $mahasiswa)
@@ -74,6 +68,6 @@ class MahasiswaController extends Controller
         if ($mahasiswa->delete())
             $user->delete();
 
-        return redirect()->route('mahasiswa_index');
+        return redirect()->route('admin_dashboard');
     }
 }

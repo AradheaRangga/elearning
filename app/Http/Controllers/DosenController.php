@@ -42,37 +42,36 @@ class DosenController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Dosen  $dosen
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Dosen $dosen)
     {
-        //
+        return view('admin.dosen.edit', compact('dosen'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Dosen  $dosen
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Dosen $dosen)
     {
-        //
+        $dosen->update([
+            'nip' => $request->nip,
+            'is_admin' => $request->is_admin,
+            'gender' => $request->gender,
+            'user_id' => $request->user_id
+         ]);
+
+         return view('admin.dosen.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Dosen  $dosen
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Dosen $dosen)
+
+    public function delete(Dosen $dosen)
     {
-        //
+
+        $user = User::where('id', $dosen->user_id);
+
+        if ($dosen->delete())
+            $user->delete();
+        else
+        dd('gagal');
+
+        return view('admin.dashboard');
     }
 }

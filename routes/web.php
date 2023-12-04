@@ -24,6 +24,8 @@ use App\Models\Assignment;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/editMahasiswa/{mahasiswa}',[MahasiswaController::class, 'edit'])->name('edit_mahasiswa');
+
 
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -35,15 +37,20 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin_dashboard');
         Route::prefix('/user')->group(function () {
-            Route::get('/register', [UserController::class, 'index'])->name('register');
+            Route::get('/register', [UserController::class, 'register'])->name('register');
             Route::post('/register/action', [UserController::class, 'actionRegister'])->name('register_action');
+            Route::get('/Dosen', [DosenController::class, 'index'])->name('admin_dosen');
+            Route::get('/editDosen/{dosen}', [DosenController::class, 'edit'])->name('edit_dosen');
+            // Route::get('/editMahasiswa/{mahasiswa}',[MahasiswaController::class, 'edit'])->name('edit_mahasiswa');
+            Route::patch('/editDosen/action', [DosenController::class, 'update'])->name('update_dosen_action');
+            Route::patch('/editMahasiswa/action', [MahasiswaController::class, 'update'])->name('update_mahasiswa_action');
+            Route::delete('/{dosen}/deleteDosen', [DosenController::class, 'delete'])->name('delete_dosen');
+            Route::delete('/{mahasiswa}/deleteMahasiswa', [MahasiswaController::class, 'delete'])->name('delete_mahasiswa');
             Route::get('/tambahDosen', [DosenController::class, 'create'])->name('tambah_dosen');
             Route::post('/tambahDosen/action', [DosenController::class, 'store'])->name('tambah_dosen_action');
+            Route::get('/Mahasiswa', [MahasiswaController::class, 'index'])->name('admin_mahasiswa');
             Route::get('/tambahMahasiswa', [MahasiswaController::class, 'create'])->name('tambah_mahasiswa');
             Route::post('/tambahMahasiswa/action', [MahasiswaController::class, 'store'])->name('tambah_mahasiswa_action');
-        });
-        Route::prefix('/dosen')->group(function () {
-            Route::get('/',[DosenController::class, 'index'])->name('admin_dosen');
         });
         Route::get('/Kelas',[AssignmentController::class, 'index'])->name('admin_kelas');
     });

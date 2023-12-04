@@ -19,7 +19,7 @@
                         Nama
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        NIP/NIM
+                        NIP
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Email

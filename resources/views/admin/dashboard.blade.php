@@ -46,63 +46,55 @@
                         Nama
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        NIP/NIM
-                    </th>
-                    <th scope="col" class="px-6 py-3">
                         Email
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Gender
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Usia
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Asal
+                        Role
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
                     </th>
                 </tr>
             </thead>
-            {{-- <tbody>
-                        @foreach ($data as $data)
-                            <tr
-                                class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $data->nama }}
-                                </th>
-                                <td class="px-6 py-4">
-                                    {{ $data->nip }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $data->user->email }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    @if ($data->gender == 'pria')
-                                        <span
-                                            class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Pria</span>
-                                    @else
-                                        <span
-                                            class="bg-pink-100 text-pink-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Wanita</span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $data->usia }} Thn
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $data->asal }}
-                                </td>
-                                <td class="flex gap-2 px-6 py-4">
-                                    <a href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                    <a href="#"
-                                        class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody> --}}
+            <tbody>
+                @foreach ($user as $data)
+                    <tr
+                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                            {{ $data->name }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $data->email }}
+                        </td>
+                        <td class="px-6 py-4 capitalize">
+                            {{ $data->role }}
+                        </td>
+                        <td class="flex gap-2 px-6 py-4">
+                            @if ($data->role == 'dosen')
+                                <a href="{{ route('edit_dosen', $data) }}"
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <form action="{{ route('delete_dosen', $data) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit"
+                                        class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                                </form>
+                            @else
+                                <a href="{{ route('edit_mahasiswa', $data) }}"
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+
+                                <form action="{{ route('delete_mahasiswa', $data) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit"
+                                        class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                                </form>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 
