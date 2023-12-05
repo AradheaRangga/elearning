@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\SubjectController;
-use App\Models\Assignment;
-use App\Models\Subject;
 
 /*
 |--------------------------------------------------------------------------
