@@ -55,54 +55,45 @@
                         Gender
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Usia
+                        Tanggal lahir
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Asal
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        Action
-                    </th>
                 </tr>
             </thead>
-            {{-- <tbody>
-                        @foreach ($data as $data)
-                            <tr
-                                class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $data->nama }}
-                                </th>
-                                <td class="px-6 py-4">
-                                    {{ $data->nip }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $data->user->email }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    @if ($data->gender == 'pria')
-                                        <span
-                                            class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Pria</span>
-                                    @else
-                                        <span
-                                            class="bg-pink-100 text-pink-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Wanita</span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $data->usia }} Thn
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $data->asal }}
-                                </td>
-                                <td class="flex gap-2 px-6 py-4">
-                                    <a href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                    <a href="#"
-                                        class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody> --}}
+            <tbody>
+                @foreach ($mahasiswa as $data)
+                    <tr
+                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $data->user->name }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $data->nim }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $data->user->email }}
+                        </td>
+                        <td class="px-6 py-4">
+                            @if ($data->gender == 'laki-laki')
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Pria</span>
+                            @else
+                                <span
+                                    class="bg-pink-100 text-pink-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Wanita</span>
+                            @endif
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ $data->tanggal_lahir }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $data->asal }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 

@@ -39,6 +39,7 @@ Route::prefix('/kelas')->group(function () {
     Route::get('/edit/{subject}', [SubjectController::class, 'edit'])->name('edit_kelas');
     Route::post('/edit/action/{subject}', [SubjectController::class, 'update'])->name('update_kelas_action');
     Route::delete('/delete/{subject}', [SubjectController::class, 'destroy'])->name('delete_kelas');
+    Route::get('/show/{subject}', [SubjectController::class, 'show'])->name('show_kelas');
 });
 Route::prefix('/mahasiswa')->group(function () {
    Route::get('/',[MahasiswaController::class, 'index'])->name('admin_mahasiswa');
@@ -59,7 +60,7 @@ Route::prefix('/dosen')->group(function () {
 
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin_dashboard');
         Route::prefix('/user')->group(function () {
@@ -78,7 +79,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/tambah/action', [AssignmentController::class, 'store'])->name('dosen_tugas_tambah_action');
             Route::get('/edit/{id}', [AssignmentController::class, 'edit'])->name('dosen_tugas_edit');
         });
-        Route::get('/kelas', [SubjectController::class, 'index'])->name('dosen_kelas');
     });
 });
 

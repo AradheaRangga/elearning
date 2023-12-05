@@ -11,14 +11,10 @@ class SubjectController extends Controller
 {
     public function index()
     {
-        $subject = Subject::all();
-        $subjectfirst = $subject->first();
-        $dosen = Dosen::with(['user'])->where('user_id', $subjectfirst->dosen_id);
+        $subject = Subject::with(['dosen'])->get();
 
-        return view('admin.kelas.index', compact('subject', 'dosen'));
+        return view('admin.kelas.index', compact('subject'));
     }
-
-
 
     public function create()
     {
@@ -42,12 +38,14 @@ class SubjectController extends Controller
 
     public function show(Subject $subject)
     {
-        //
+        $detailSubject = DetailSubject::where('subject_id', $subject->id)->get();
+        $dosen = Dosen::all();
+
+        return view('dosen.kelas.show', compact('subject', 'dosen', 'detailSubject'));
     }
 
     public function edit(Subject $subject)
     {
-        // $detailSubject = DetailSubject::where('subject_id', $subject->id)->get();
         $dosen = Dosen::all();
 
         return view('admin.kelas.edit', compact('subject', 'dosen'));
@@ -55,8 +53,6 @@ class SubjectController extends Controller
 
     public function update(Request $request, Subject $subject)
     {
-        $detailSubject = DetailSubject::where('subject_id', $subject->id);
-
         $subject->update([
             'subject_name' => $request->subject_name,
             'dosen_id' => $request->dosen_id,
@@ -66,8 +62,4 @@ class SubjectController extends Controller
         return redirect()->route('index_kelas');
     }
 
-    public function destroy(Subject $subject)
-    {
-        //
-    }
 }

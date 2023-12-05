@@ -19,7 +19,7 @@ class DosenController extends Controller
         return view('admin.dosen.create');
     }
 
-    public function store(Request $request)
+        public function store(Request $request)
     {
         Dosen::create([
             'nip' => $request->nip,

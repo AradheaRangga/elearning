@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+
 
 class MahasiswaController extends Controller
 {
@@ -17,7 +17,7 @@ class MahasiswaController extends Controller
     }
 
 
-    public function create(Request $request)
+    public function create()
     {
         return view('admin.mahasiswa.create');
     }
@@ -33,11 +33,6 @@ class MahasiswaController extends Controller
          ]);
 
          return redirect()->route('admin_mahasiswa');
-    }
-
-    public function show(Mahasiswa $mahasiswa)
-    {
-        //
     }
 
     public function edit(Mahasiswa $mahasiswa)

@@ -41,7 +41,7 @@
                             {{ $data->subject_name }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $dosen->user->name }}
+                            {{ $data->dosen->user->name }}
                         </td>
                         <td class="flex gap-2 px-6 py-4">
                             <a href="{{ route('edit_kelas', $data) }}"
