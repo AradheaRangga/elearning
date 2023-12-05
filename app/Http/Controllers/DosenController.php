@@ -10,7 +10,8 @@ class DosenController extends Controller
 {
     public function index()
     {
-        return view('admin.dosen.index');
+        $dosen = Dosen::all();
+        return view('admin.dosen.index', compact('dosen'));
     }
 
     public function create()
@@ -27,21 +28,9 @@ class DosenController extends Controller
             'user_id' => $request->user_id
          ]);
 
-         return view('admin.dosen.index');
+         return redirect()->route('admin_dosen');
 
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Dosen  $dosen
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Dosen $dosen)
-    {
-        //
-    }
-
 
     public function edit(Dosen $dosen)
     {
@@ -58,7 +47,7 @@ class DosenController extends Controller
             'user_id' => $request->user_id
          ]);
 
-         return view('admin.dosen.index');
+         return redirect()->route('admin_dosen');
     }
 
 
@@ -72,6 +61,6 @@ class DosenController extends Controller
         else
         dd('gagal');
 
-        return view('admin.dashboard');
+        return redirect()->route('admin_dosen');
     }
 }

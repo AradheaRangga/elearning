@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('dosen_id')->constrained('dosens');
             $table->string('subject_name');
             $table->timestamps();
         });

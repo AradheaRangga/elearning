@@ -11,6 +11,7 @@ class Subject extends Model
     protected $fillable = [
         'user_id',
         'subject_name',
+        'dosen_id',
     ];
 
 
@@ -24,5 +25,9 @@ class Subject extends Model
 
     public function detailSubject(){
         return $this->hasMany(DetailSubject::class);
+    }
+
+    public function dosen(){
+        return $this->belongsTo(Dosen::class);
     }
 }

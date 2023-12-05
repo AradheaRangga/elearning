@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Tambah Mahasiswa')
+@section('title', 'Tambah Dosen')
 @section('content')
     <section>
         <form class="max-w-md" action="{{ route('tambah_dosen_action') }}" method="post">

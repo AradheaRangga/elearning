@@ -2,10 +2,11 @@
 @section('title', 'Edit Mahasiswa')
 @section('content')
     <section>
-        <form class="max-w-md" action="{{ route('tambah_mahasiswa_action') }}" method="post">
+        <form class="max-w-md" action="{{ route('update_mahasiswa_action', $mahasiswa) }}" method="post">
             @csrf
+            {{-- @method('patch') --}}
             <div class="relative z-0 w-full mb-5 group">
-                <input type="text" name="nim" id="floating_nim"
+                <input type="text" value="{{ $mahasiswa->nim }}" name="nim" id="floating_nim"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-400 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " required />
                 <label for="floating_nim"
@@ -13,7 +14,7 @@
                     Induk Mahasiswa</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
-                <input type="text" name="asal" id="floating_asal"
+                <input type="text" value="{{ $mahasiswa->asal }}" name="asal" id="floating_asal"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-400 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " required />
                 <label for="floating_asal"
@@ -21,7 +22,7 @@
                     Daerah</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
-                <input type="date" name="tanggal_lahir" id="floating_tl"
+                <input type="date" value="{{ $mahasiswa->tanggal_lahir }}" name="tanggal_lahir" id="floating_tl"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-400 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " required />
                 <label for="floating_tl"
@@ -38,15 +39,12 @@
                     </label>
                 </div>
                 <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                    <input checked id="bordered-radio-2" type="radio" value="perempuan" name="gender"
+                    <input id="bordered-radio-2" type="radio" value="perempuan" name="gender"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label for="bordered-radio-2"
                         class="w-full py-4 ms-2 text-sm font-medium text-gray-400 dark:text-gray-400">Perempuan
                     </label>
                 </div>
-            </div>
-            <div>
-                <input type="hidden" name="user_id" value="{{ $user->id }}">
             </div>
 
             <button type="submit"

@@ -28,15 +28,6 @@
         </a>
     </div>
     <div class="flex flex-row-reverse mb-4">
-        {{-- <button type="button" onclick="window.location='{{ route('user_create') }}'"
-                    class="text-white bg-green-500 hover:bg-green-700 focus:ring-2 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-green-500">
-                    <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 20 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 8h6m-3 3V5m-6-.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
-                    </svg>
-                    Tambah Pengguna
-                </button> --}}
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -72,19 +63,19 @@
                         </td>
                         <td class="flex gap-2 px-6 py-4">
                             @if ($data->role == 'dosen')
-                                <a href="{{ route('edit_dosen', $data) }}"
+                                <a href="{{ route('edit_dosen', $data->dosen) }}"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <form action="{{ route('delete_dosen', $data) }}" method="post">
+                                <form action="{{ route('delete_dosen', $data->dosen) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button type="submit"
                                         class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
                                 </form>
                             @else
-                                <a href="{{ route('edit_mahasiswa', $data) }}"
+                                <a href="{{ route('edit_mahasiswa', $data->mahasiswa) }}"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
 
-                                <form action="{{ route('delete_mahasiswa', $data) }}" method="post">
+                                <form action="{{ route('delete_mahasiswa', $data->mahasiswa) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button type="submit"

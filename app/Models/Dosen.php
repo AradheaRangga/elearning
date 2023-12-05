@@ -19,7 +19,7 @@ class Dosen extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function detailSubject(){
+    public function subject(){
         return $this->hasOne(DetailSubject::class);
     }
 }

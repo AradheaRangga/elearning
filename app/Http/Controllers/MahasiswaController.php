@@ -11,9 +11,9 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $data = Mahasiswa::all();
+        $mahasiswa = Mahasiswa::all();
 
-        return view('admin.mahasiswa.index', compact('data'));
+        return view('admin.mahasiswa.index', compact('mahasiswa'));
     }
 
 
@@ -32,7 +32,7 @@ class MahasiswaController extends Controller
             'user_id' => $request->user_id
          ]);
 
-         return view('admin.mahasiswa.index');
+         return redirect()->route('admin_mahasiswa');
     }
 
     public function show(Mahasiswa $mahasiswa)
@@ -42,23 +42,19 @@ class MahasiswaController extends Controller
 
     public function edit(Mahasiswa $mahasiswa)
     {
-        $user = User::where('id', $mahasiswa->user_id)->get();
-
-        return view('admin.mahasiswa.edit', compact('user', 'mahasiswa'));
+        return view('admin.mahasiswa.edit', compact('mahasiswa'));
     }
 
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-
         $mahasiswa->update([
             'nim' => $request->nim,
             'tanggal_lahir' => $request->tanggal_lahir,
             'asal' => $request->asal,
             'gender' => $request->gender,
-            'user_id' => $request->user_id
          ]);
 
-         return view('admin.mahasiswa.index');
+         return redirect()->route('admin_mahasiswa');
     }
 
     public function delete(Mahasiswa $mahasiswa)

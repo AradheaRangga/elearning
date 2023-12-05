@@ -2,82 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
+use App\Models\Subject;
 use Illuminate\Http\Request;
+use App\Models\DetailSubject;
 
 class SubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $subject = Subject::all();
+        $subjectfirst = $subject->first();
+        $dosen = Dosen::with(['user'])->where('user_id', $subjectfirst->dosen_id);
+
+        return view('admin.kelas.index', compact('subject', 'dosen'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function create()
     {
-        //
+        $dosen = Dosen::all();
+
+        return view('admin.kelas.create', compact('dosen'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $subject = new Subject();
+        $subject->subject_name = $request->subject_name;
+        $subject->dosen_id = $request->dosen_id;
+        $subject->save();
+
+        DetailSubject::create([
+            'subject_id' => $subject->id,
+        ]);
+        return redirect()->route('index_kelas');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Subject $subject)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Subject $subject)
     {
-        //
+        // $detailSubject = DetailSubject::where('subject_id', $subject->id)->get();
+        $dosen = Dosen::all();
+
+        return view('admin.kelas.edit', compact('subject', 'dosen'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Subject $subject)
     {
-        //
+        $detailSubject = DetailSubject::where('subject_id', $subject->id);
+
+        $subject->update([
+            'subject_name' => $request->subject_name,
+            'dosen_id' => $request->dosen_id,
+        ]);
+
+
+        return redirect()->route('index_kelas');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Subject $subject)
     {
         //
     }
