@@ -37,9 +37,10 @@ class UserController extends Controller
     }
 
     public function index(){
-        $user_id = Auth::user()->id;
-        $user = User::find($user_id);
-        return view('profile', compact('user'));
+        // $user_id = Auth::user()->id;
+        // $user = User::find($user_id);
+
+        // return view('profile', compact('user'));
     }
 
     public function edit(){
@@ -49,27 +50,27 @@ class UserController extends Controller
         return view('editUser', compact('user'));
     }
 
+    public function show(){
+        $user_id = Auth::user()->id;
+        $user= User::find($user_id);
+        $userAll = $user::all();
+
+        return view('profile', compact('user', 'userAll'));
+    }
     public function update(Request $request){
 
-        $this->validate($request,[
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'content' => 'required|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
         $user_id = Auth::user()->id;
-        $user = User::find($user_id);
+        $user = User::where('id', $user_id)->first();
 
         // $file = $request->file('photo');
         $path = $request->file('photo')->store('public/profile');
 
-        dd($path);
-
-        $user->update([
+        $coba = $user->update([
         'name' => $request->name,
         'email' => $request->email,
-    //    'photo' => $path,
-    ]);
+        'photo' => $path,
+        ]);
+
 
 
         return redirect()->route('profile');

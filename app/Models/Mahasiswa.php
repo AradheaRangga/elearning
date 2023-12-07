@@ -23,4 +23,8 @@ class Mahasiswa extends Model
     public function detailSubject(){
         return $this->hasMany(DetailSubject::class);
     }
+
+    public function jawabans(){
+        return $this->hasMany(Jawaban::class);
+    }
 }

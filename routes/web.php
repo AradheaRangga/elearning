@@ -32,10 +32,11 @@ Route::post('/login/action', [AuthController::class, 'actionLogin'])->name('logi
 Route::post('/logout', [AuthController::class, 'actionLogout'])->name('logout');
 
 Route::post('/kelas/masuk/action/{subject}', [DetailSubjectController::class, 'store'])->name('ambil_kelas_action');
-// Route::get('/user/profile', [UserController::class, 'show'])->name('profile');
-// Route::get('/user/profile/edit', [UserController::class, 'edit'])->name('edit_profile');
-// Route::post('/user/profile/edit/action/{id}', [UserController::class, 'update'])->name('update_profile_action');
-Route::resource('profile', UserController::class);
+Route::get('/user/profile', [UserController::class, 'show'])->name('profile');
+Route::get('/user/profile/edit/{user}', [UserController::class, 'edit'])->name('edit_profile');
+Route::post('/user/profile/edit/{user}/action', [UserController::class, 'update'])->name('update_profile_action');
+Route::post('/user/profile/edit/{user}/aksi', [UserController::class, 'update']);
+// Route::resource('profile', UserController::class);
 
 Route::prefix('/kelas')->group(function () {
     Route::get('/',[SubjectController::class, 'index'])->name('index_kelas');
