@@ -15,6 +15,10 @@ class Dosen extends Model
         'gender',
     ];
 
+    protected $casts = [
+        'is_admin' => 'boolean',
+];
+
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }

@@ -58,8 +58,18 @@
                         <td class="px-6 py-4">
                             {{ $data->email }}
                         </td>
-                        <td class="px-6 py-4 capitalize">
-                            {{ $data->role }}
+                        <td class="px-6 py-4">
+                            {{-- @dd($data->dosen) --}}
+                            @if ($data->dosen)
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Dosen</span>
+                            @elseif ($data->role == 'dosen')
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Admin</span>
+                            @else
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Mahasiswa</span>
+                            @endif
                         </td>
                         <td class="flex gap-2 px-6 py-4">
                             @if ($data->role == 'dosen')

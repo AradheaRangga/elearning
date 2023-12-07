@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AssignmentController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DosenController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\DetailSubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,12 @@ Route::post('/login/action', [AuthController::class, 'actionLogin'])->name('logi
 
 Route::post('/logout', [AuthController::class, 'actionLogout'])->name('logout');
 
+Route::post('/kelas/masuk/action/{subject}', [DetailSubjectController::class, 'store'])->name('ambil_kelas_action');
+// Route::get('/user/profile', [UserController::class, 'show'])->name('profile');
+// Route::get('/user/profile/edit', [UserController::class, 'edit'])->name('edit_profile');
+// Route::post('/user/profile/edit/action/{id}', [UserController::class, 'update'])->name('update_profile_action');
+Route::resource('profile', UserController::class);
+
 Route::prefix('/kelas')->group(function () {
     Route::get('/',[SubjectController::class, 'index'])->name('index_kelas');
     Route::get('/tambah', [SubjectController::class, 'create'])->name('tambah_kelas');
@@ -37,7 +44,7 @@ Route::prefix('/kelas')->group(function () {
     Route::get('/edit/{subject}', [SubjectController::class, 'edit'])->name('edit_kelas');
     Route::post('/edit/action/{subject}', [SubjectController::class, 'update'])->name('update_kelas_action');
     Route::delete('/delete/{subject}', [SubjectController::class, 'destroy'])->name('delete_kelas');
-    Route::get('/show/{subject}', [SubjectController::class, 'show'])->name('show_kelas');
+    Route::get('/show', [SubjectController::class, 'show'])->name('show_kelas');
 });
 Route::prefix('/mahasiswa')->group(function () {
    Route::get('/',[MahasiswaController::class, 'index'])->name('admin_mahasiswa');
@@ -58,7 +65,8 @@ Route::prefix('/dosen')->group(function () {
 
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+
+
     Route::prefix('/admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin_dashboard');
         Route::prefix('/user')->group(function () {
@@ -66,7 +74,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::post('/register/action', [UserController::class, 'actionRegister'])->name('register_action');
         });
     });
-});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/dosen')->group(function () {
@@ -80,6 +88,8 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+Route::prefix('/mahasiswa')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('mahasiswa_dashboard');
+});
 Route::middleware(['auth', 'mahasiswa'])->group(function () {
-
 });

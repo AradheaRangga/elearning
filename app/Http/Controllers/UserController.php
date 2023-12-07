@@ -16,7 +16,7 @@ class UserController extends Controller
     public function actionRegister(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:4|unique:users',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' =>'required|min:6',
         ]);
@@ -34,5 +34,44 @@ class UserController extends Controller
          }else{
             return view('admin.dosen.create', compact('user'));
          }
+    }
+
+    public function index(){
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        return view('profile', compact('user'));
+    }
+
+    public function edit(){
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+
+        return view('editUser', compact('user'));
+    }
+
+    public function update(Request $request){
+
+        $this->validate($request,[
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'content' => 'required|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+
+        // $file = $request->file('photo');
+        $path = $request->file('photo')->store('public/profile');
+
+        dd($path);
+
+        $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+    //    'photo' => $path,
+    ]);
+
+
+        return redirect()->route('profile');
     }
 }

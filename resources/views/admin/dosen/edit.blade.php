@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'Tambah Mahasiswa')
+@section('title', 'Edit Data Dosen')
 @section('content')
     <section>
-        <form class="max-w-md" action="{{ route('tambah_dosen_action') }}" method="post">
+        <form class="max-w-md" action="{{ route('update_dosen_action', $dosen) }}" method="post">
             @csrf
             <div class="relative z-0 w-full mb-5 group">
-                <input type="text" name="nip" id="floating_nip"
+                <input type="text" value="{{ $dosen->nip }}" name="nip" id="floating_nip"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-400 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " required />
                 <label for="floating_nim"
@@ -21,7 +21,7 @@
                     </label>
                 </div>
                 <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                    <input checked id="bordered-radio-2" type="radio" value="0" name="is_admin"
+                    <input id="bordered-radio-2" type="radio" value="0" name="is_admin"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label for="bordered-radio-2"
                         class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-500">Dosen
@@ -38,15 +38,12 @@
                     </label>
                 </div>
                 <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                    <input checked id="bordered-radio-2" type="radio" value="perempuan" name="gender"
+                    <input id="bordered-radio-2" type="radio" value="perempuan" name="gender"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label for="bordered-radio-2"
                         class="w-full py-4 ms-2 text-sm font-medium text-gray-400 dark:text-gray-400">Perempuan
                     </label>
                 </div>
-            </div>
-            <div>
-                <input type="hidden" name="user_id" value="{{ $user->id }}">
             </div>
 
             <button type="submit"

@@ -44,7 +44,6 @@ class DosenController extends Controller
             'nip' => $request->nip,
             'is_admin' => $request->is_admin,
             'gender' => $request->gender,
-            'user_id' => $request->user_id
          ]);
 
          return redirect()->route('admin_dosen');

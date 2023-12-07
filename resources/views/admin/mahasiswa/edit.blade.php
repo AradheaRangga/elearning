@@ -1,10 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Edit Mahasiswa')
+@section('title', 'Edit Data Mahasiswa')
 @section('content')
     <section>
         <form class="max-w-md" action="{{ route('update_mahasiswa_action', $mahasiswa) }}" method="post">
             @csrf
-            {{-- @method('patch') --}}
             <div class="relative z-0 w-full mb-5 group">
                 <input type="text" value="{{ $mahasiswa->nim }}" name="nim" id="floating_nim"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-400 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"

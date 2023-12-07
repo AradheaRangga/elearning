@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Dosen;
 use App\Models\Subject;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Models\DetailSubject;
+use Illuminate\Support\Facades\Auth;
 
 class SubjectController extends Controller
 {
@@ -30,18 +32,20 @@ class SubjectController extends Controller
         $subject->dosen_id = $request->dosen_id;
         $subject->save();
 
-        DetailSubject::create([
-            'subject_id' => $subject->id,
-        ]);
+        // DetailSubject::create([
+        //     'subject_id' => $subject->id,
+        // ]);
         return redirect()->route('index_kelas');
     }
 
-    public function show(Subject $subject)
+    public function show()
     {
-        $detailSubject = DetailSubject::where('subject_id', $subject->id)->get();
-        $dosen = Dosen::all();
+        $dosen_id = Auth::user()->dosen->id;
+        $subject = Subject::where('dosen_id', $dosen_id)->get()->first();
+        $detailSubject = DetailSubject::where('subject_id', $subject->id)->get()->first();
+        // dd($detailSubject);
 
-        return view('dosen.kelas.show', compact('subject', 'dosen', 'detailSubject'));
+        return view('dosen.kelas.show', compact( 'detailSubject','subject'));
     }
 
     public function edit(Subject $subject)
