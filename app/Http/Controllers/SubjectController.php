@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\Subject;
 use App\Models\Mahasiswa;
+use App\Models\Assignment;
 use Illuminate\Http\Request;
 use App\Models\DetailSubject;
 use Illuminate\Support\Facades\Auth;
@@ -38,14 +39,22 @@ class SubjectController extends Controller
         return redirect()->route('index_kelas');
     }
 
-    public function show()
+    public function show(Assignment $assignment)
     {
-        $dosen_id = Auth::user()->dosen->id;
-        $subject = Subject::where('dosen_id', $dosen_id)->get()->first();
-        $detailSubject = DetailSubject::where('subject_id', $subject->id)->get()->first();
+        if(Auth::user()->role == 'dosen'){
+            $dosen_id = Auth::user()->dosen->id;
+            $subject = Subject::where('dosen_id', $dosen_id)->get()->first();
+            if($subject){
+                $detailSubject = DetailSubject::where('subject_id', $subject->id)->get()->first();
+                return view('dosen.kelas.show', compact( 'detailSubject','subject'));
+            }
+            return view('dosen.kelas.show', compact('subject'));
+        } else {
+            $subject = Subject::with('assignment')->get();
+            return view('mahasiswa.tugas.index', compact('subject', 'assignment'));
+        }
         // dd($detailSubject);
 
-        return view('dosen.kelas.show', compact( 'detailSubject','subject'));
     }
 
     public function edit(Subject $subject)

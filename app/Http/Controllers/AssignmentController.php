@@ -2,44 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subject;
 use App\Models\Assignment;
+use App\Models\DetailSubject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
 {
     public function index()
     {
-        $tugas = Assignment::all();
 
-        return view('dosen.tugas.index', compact('tugas'));
+        if(Auth::user()->role == 'dosen'){
+            $dosen_id = Auth::user()->dosen->id;
+            $subject = Subject::where('dosen_id', $dosen_id)->get()->first();
+            $tugas = Assignment::all();
+            if($subject){
+                $detailSubject = DetailSubject::where('subject_id', $subject->id)->get()->first();
+                return view('dosen.tugas.index', compact( 'detailSubject','subject', 'tugas'));
+            }
+            return view('dosen.tugas.index', compact('subject', 'tugas'));
+        } else {
+            $subjectIdsTakenByMahasiswa = DetailSubject::with('subject')->where('mahasiswa_id', auth()->user()->mahasiswa->id)->pluck('subject_id');
+            $subjectsAvailable = Subject::whereNotIn('id', $subjectIdsTakenByMahasiswa)->get();
+            $subjects = Subject::with('assignments')->get();
+            $mahasiswaSubjects = DetailSubject::with('subject')->where('mahasiswa_id', auth()->user()->mahasiswa->id)->get();
+            return view('mahasiswa.tugas.index', compact( 'mahasiswaSubjects', 'subjectsAvailable', 'subjects'));
+        }
     }
 
 
-    public function create(){
-        return view('dosen.tugas.create');
-    }
 
-       public function store(Request $request)
+    public function create(Subject $subject){
+        return view('dosen.tugas.create', compact('subject'));    }
+
+       public function store(Request $request, Subject $subject)
     {
-        $request->validate([
-            'subject_id' => 'required',
-            'title' => 'required',
-            'description' => 'required',
-            'deadline' => 'required',
-            'content' => 'required|mimes:pdf|max:2048',
-        ]);
 
-        $file = $request->file('photo');
-        $path = time().'_'.$request->name.'.'.$file->getClientOriginalName();
-        Storage::disk('local')->put('public/'.$path,  file_get_contents($file));
+        $path = $request->file('content')->store('public/soal');
 
-        Assignment::create([
-           'title' => $request->title,
-           'description' => $request->description,
-           'deadline' => $request->deadline,
-           'content' => $path,
-        ]);
-        return(redirect('/admin/assignment')->with(['success' => 'Tugas Berhasil Dibuat!']));
+
+            $assignment = new Assignment();
+            $assignment->subject_id = $subject->id;
+            $assignment->title = $request->title;
+
+            $originalDate = $request->deadline;
+            $newDate = date('Y-m-d', strtotime($originalDate));
+
+            $assignment->deadline = $newDate;
+            $assignment->description = $request->description;
+            $assignment->content = $path;
+            $assignment->save();
+
+        return(redirect()->route('dosen_show_kelas')->with(['success' => 'Tugas Berhasil Dibuat!']));
+
     }
 }

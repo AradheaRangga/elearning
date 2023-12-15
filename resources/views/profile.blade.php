@@ -52,10 +52,10 @@
                     </div>
                     <div class="flex flex-col items-center pb-10">
                         @if ($user->photo == null)
-                            <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="http://www.w3.org/2000/svg"
-                                alt="Bonnie image" />
+                            <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src={{ url('/profile.png') }}
+                                alt="" />
                         @else
-                            <img class="w-24 h-24 mb-3 rounded-all shadow-lg" src={{ Storage::url($user->photo) }}
+                            <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src={{ Storage::url($user->photo) }}
                                 alt={{ $user->name }}>
                         @endif
                         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $user->name }}</h5>
