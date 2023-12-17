@@ -45,7 +45,7 @@ class SubjectController extends Controller
             $dosen_id = Auth::user()->dosen->id;
             $subject = Subject::where('dosen_id', $dosen_id)->get()->first();
             if($subject){
-                $detailSubject = DetailSubject::where('subject_id', $subject->id)->get()->first();
+                $detailSubject = DetailSubject::where('subject_id', $subject->id)->get()->all();
                 return view('dosen.kelas.show', compact( 'detailSubject','subject'));
             }
             return view('dosen.kelas.show', compact('subject'));

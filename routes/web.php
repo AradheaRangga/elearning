@@ -63,6 +63,7 @@ Route::prefix('/mahasiswa')->group(function () {
     Route::get('/kelas/{subject}', [SubjectController::class, 'show'])->name('mahasiswa_show_kelas');
     Route::get('/lihat/tugas', [AssignmentController::class, 'index'])->name('mahasiswa_show_tugas');
     Route::get('/lihat/tugas/{assignment}', [JawabanController::class, 'index'])->name('mahasiswa_upload_tugas');
+    Route::post('/lihat/tugas/{assignment}/action', [JawabanController::class, 'store'])->name('mahasiswa_upload_tugas_action');
     // Route::get('/lihat/tugas/{subject}', [AssignmentController::class, 'getAssignmentsBySubject']);
 });
 

@@ -58,29 +58,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($subject as $detailSubject)
-                    @if ($subject != null)
-                        @dd($detailSubject->mahasiswa)
+                @if ($subject != null)
+                    @foreach ($detailSubject as $data)
+                        {{-- @dd($data->mahasiswa) --}}
                         <tr
                             class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $detailSubject->mahasiswa->user->name }}
+                                {{ $data->mahasiswa->user->name }}
                             </th>
                             <td class="px-6 py-4">
 
-                                <img class="w-10 h-10 rounded-full"
-                                    src={{ Storage::url($detailSubject->mahasiswa->user->photo) }} alt="Rounded avatar">
+                                <img class="w-10 h-10 rounded-full" src={{ Storage::url($data->mahasiswa->user->photo) }}
+                                    alt="Rounded avatar">
 
                             </td>
                             <td class="px-6 py-4">
-                                {{ $detailSubject->mahasiswa->nim }}
+                                {{ $data->mahasiswa->nim }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $detailSubject->mahasiswa->user->email }}
+                                {{ $data->mahasiswa->user->email }}
                             </td>
                             <td class="px-6 py-4">
-                                @if ($detailSubject->mahasiswa->gender == 'laki-laki')
+                                @if ($data->mahasiswa->gender == 'laki-laki')
                                     <span
                                         class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Pria</span>
                                 @else
@@ -89,10 +89,10 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4">
-                                {{ $detailSubject->mahasiswa->asal }}
+                                {{ $data->mahasiswa->asal }}
                             </td>
                         </tr>
-                    @endif
-                @endforeach
+                    @endforeach
+                @endif
             </tbody>
         @endsection
